@@ -31,5 +31,4 @@ entry_num2.pack()
 button_restar = tk.Button(ventana, text="Restar", command=restar)
 button_restar.pack()
 
-# Ejecutar la aplicación
 ventana.mainloop()
