@@ -1,10 +1,33 @@
 #Hacer un hola mundo con flask
 #Hacer las importaciones necesarias, en este caso sería de flask
-from flask import Flask,request
+from flask import Flask,request,jsonify
+#agregar una importación de lo que se necesite de la base de dato
+from flask_mysqldb import MySQL
+
 
 
 #declara una variable
 app=Flask(__name__)
+#da de alta las variables de la configuración de la bd
+app.config['MYSQL_HOST']='localhost'
+#da de alta lo del usuario con el que te conectas a la bd
+app.config['MYSQL_USER']='root'
+#contraseña de la bd que por lo general viene vacia
+app.config['MYSQL_DB']='bdflask'
+
+#crear una variable que se va a usar para la conexion a la bd
+mysql= MySQL(app)
+
+#Comprobacion de ruta para conexion de la bd
+@app.route('/pruebaConexion')
+def pruebaConexion():
+    try: 
+        cursor=mysql.connection.cursor()
+        cursor.execute("Select 1")
+        datos= cursor.fetchone()
+        return jsonify({'status': 'Conexion existosa', 'data':datos})
+    except Exception as ex:
+        return jsonify({'status': 'Error de Conexion', 'mensaje':str(ex)})
 
 #Ruta simple (ejemplificar la ruta)
 @app.route('/')
