@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "<h1>HOME holis profe</h1>"
+    return "<h1>HOME</h1>"
 
 @app.route('/formulario', methods=['GET', 'POST'])
 def formulario():
