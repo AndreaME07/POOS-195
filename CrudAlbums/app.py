@@ -35,6 +35,19 @@ def guardarAlbum():
         print(titulo,artista,anio)
         return 'Datos recibidos en el server'
 
+@app.route('/opera')
+def opera():
+    return render_template('ejemplo.html')
+
+@app.route('/suma', methods=['POST'])
+def suma():
+    if request.method == 'POST':
+        num1= int(request.form['no1'])
+        num2=int(request.form['no2'])
+        num3=int(request.form['no3'])
+        resultado= num1 + num2 + num3
+        return "El resultado es: " + str(resultado)
+
 
 
 #Manejo de excepciones para rutas 
