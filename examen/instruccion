@@ -1,0 +1,12 @@
+Crea una aplicación en web con Flask que contenga 3 rutas
+
+1. /
+2. formulario
+3. numeroalcuadrado
+
+b. La ruta / debe retorna una vista HTML con el título HOME
+c. La ruta formulario nos lleva a un formulario con los campos nombre y edad
+junto con un botón de envió
+d. La ruta numeroalcuadrado trabajara con un numero como parámetro y retornar
+en numero elevado al cuadrado como resultado
+e. Sin no existe la ruta el servidor debe retornar un mensaje personalizado
