@@ -26,7 +26,16 @@ mysql= MySQL(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        cursor= mysql.connection.cursor();
+        cursor.execute('select * from albums')
+        consultaA= cursor.fetchall()
+        return render_template('index.html', albums= consultaA)
+        #redireccion y resultado de la consulta
+    except Exception as e:
+        print('e')
+
+    
 
 #crear una función para mandar los datos al momento de pulsar el boton.
 @app.route('/guardarAlbum', methods=['POST'])

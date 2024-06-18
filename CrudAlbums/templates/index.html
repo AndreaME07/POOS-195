@@ -30,5 +30,38 @@
         <button type="submit">Guardar Album</button>
 
     </form>
+
+    <br>
+    <br>
+    <br>
+
+    <table>
+        <thead>
+            <!--preparar los contenidos del ecabezado-->
+            <tr>
+                <td>ID:</td>
+                <td>Album:</td>
+                <td>Artista:</td>
+                <td>Año:</td>
+                <td>Operaciones:</td>
+
+            </tr>        
+        </thead>
+        <!--procesar los elementos de latabla-->
+        <tbody>
+            {%for album in albums%}
+            <tr>
+                <!--Escrbimos los td que se necesitan y declara con una impresion-->
+                <td>{{album.0}}</td>
+                <td>{{album.1}}</td>
+                <td>{{album.2}}</td>
+                <td>{{album.3}}</td>
+                <!--Agregar la parte de eliminar y agregar-->
+                <td><a href="#">Editar</a></td>
+                <td><a href="#">Borrar</a></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
 </body>
 </html>
