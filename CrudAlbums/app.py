@@ -57,19 +57,30 @@ def guardarAlbum():
         #hacemos que una vez guardado el dato que redireccione al index
         return redirect(url_for('index'))
 
-@app.route('/opera')
-def opera():
-    return render_template('ejemplo.html')
+@app.route('/editar/<id>')
+def editar(id):
+    cur= mysql.connection.cursor()
+    cur.execute ('select * from albums where id_album=%s',[id])
+    albumE= cur.fetchone()
+    return render_template('editar.html', album=albumE)
 
-@app.route('/suma', methods=['POST'])
-def suma():
+@app.route('/ActualizarAlbum/<id>', methods=['POST'])
+def ActualizarAlbum(id):
     if request.method == 'POST':
-        num1= int(request.form['no1'])
-        num2=int(request.form['no2'])
-        num3=int(request.form['no3'])
-        resultado= num1 + num2 + num3
-        return "El resultado es: " + str(resultado)
-
+        #tomamos los datso que vienen por POST
+        Ftitulo= request.form['txtTitulo']
+        Fartista=request.form['txtArtista']
+        Fanio=request.form['txtAnio']
+        #Enviamos a la BD
+        cursor= mysql.connection.cursor()
+        #mandamos un insert del formulario hacia nuestra base de datos
+        cursor.execute('update albums set titulo= %s,artista= %s,anio= %s where id_album= %s', (Ftitulo,Fartista,Fanio,id) )
+        #mandamos el commit
+        mysql.connection.commit()
+        
+        flash('Album Editado corretamente')
+        #hacemos que una vez guardado el dato que redireccione al index
+        return redirect(url_for('index'))
 
 
 #Manejo de excepciones para rutas 
