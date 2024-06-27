@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario Albums</title>
-    
+
+    <script type="text/javascript">
+        function confirmarEliminacion(event, id) {
+            event.preventDefault();  //muestra la ventana
+            var confirmar = confirm("¿Estás seguro de que deseas eliminar este álbum?");//variable y 
+            if (confirmar) {
+                // Creamos un elemento de formulario 
+                var form = document.createElement('form');
+                //concatenamos la parte de '/EliminarAlbum/' con el 'id' pasado a la función que creamos
+                form.action = '/EliminarAlbum/' + id;
+                // Se agrega al mismo formulario recién creado al cuerpo del documento html
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -58,7 +73,9 @@
                 <td>{{album.3}}</td>
                 <!--Agregar la parte de eliminar y agregar-->
                 <td><a href="/editar/{{album.0}}">Editar</a></td>
-                <td><a href="#">Borrar</a></td>
+                <td>
+                <td><a href="/EliminarAlbum" onclick="confirmarEliminacion(event, '{{ album.0 }}')">Borrar</a></td>
+                </td>
             </tr>
             {%endfor%}
         </tbody>

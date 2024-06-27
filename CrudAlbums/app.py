@@ -82,6 +82,16 @@ def ActualizarAlbum(id):
         #hacemos que una vez guardado el dato que redireccione al index
         return redirect(url_for('index'))
 
+@app.route('/EliminarAlbum/<id>')
+def EliminarAlbum(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('delete from albums WHERE id_album = %s', [id])
+    mysql.connection.commit()
+        
+    flash('Álbum eliminado correctamente')
+    return redirect(url_for('index'))
+
+
 
 #Manejo de excepciones para rutas 
 @app.errorhandler(404)
