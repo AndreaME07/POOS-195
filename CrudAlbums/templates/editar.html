@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Albums</title>
-    
-</head>
-<body>
-    
-       <!--mensaje con Jinja-->
-       {% with msj = get_flashed_messages() %}
-       {% if msj %}
-       {% for mensaje in msj %}
-           <h1>{{ mensaje }}</h1>
-       {%endfor%}
-       {%endif%}
-       {%endwith%}
+    {% extends "plantilla.html" %}
+    {%block body%}
 
     <h1>Editar Album</h1>
-    <br>
-    <br>
     <!--hacer un formulario con título, artista, año-->
     <form action="/ActualizarAlbum/{{album.0}}" method="post">
         <label>Título: </label>
@@ -34,7 +16,4 @@
         <button type="submit">Editar Album</button>
 
     </form>
-
-   
-</body>
-</html>
+    {%endblock%}

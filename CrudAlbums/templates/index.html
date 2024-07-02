@@ -1,84 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Albums</title>
-
-    <script type="text/javascript">
-        function confirmarEliminacion(event, id) {
-            event.preventDefault();  //muestra la ventana
-            var confirmar = confirm("¿Estás seguro de que deseas eliminar este álbum?");//variable y 
-            if (confirmar) {
-                // Creamos un elemento de formulario 
-                var form = document.createElement('form');
-                //concatenamos la parte de '/EliminarAlbum/' con el 'id' pasado a la función que creamos
-                form.action = '/EliminarAlbum/' + id;
-                // Se agrega al mismo formulario recién creado al cuerpo del documento html
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
-    </script>
-</head>
-<body>
-
+    {% extends "plantilla.html"%}
+    {%block body%}
     <!--mensaje con Jinja-->
     {% with msj = get_flashed_messages() %}
     {% if msj %}
     {% for mensaje in msj %}
-        <h1>{{ mensaje }}</h1>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ mensaje }}</strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     {%endfor%}
     {%endif%}
     {%endwith%}
-    <!--hacer un formulario con título, artista, año-->
-    <form action="/guardarAlbum" method="post">
-        <label>Título: </label>
-        <input type="Text" name="txtTitulo">
+    <h1 class="text-center mt-5 mb-5 display-4 text-danger">Gestion de albums</h1>
+    <div class="row">
+        <div class="col-md-5">
+        <!--aqui va el formulario-->
+          <!--hacer un formulario con título, artista, año-->
+            <form action="/guardarAlbum" method="post">
+                <label>Título: </label>
+                <input type="Text" name="txtTitulo">
 
-        <label>Artista: </label>
-        <input type="Text" name="txtArtista">
+                <label>Artista: </label>
+                <input type="Text" name="txtArtista">
 
-        <label>Año: </label>
-        <input type="number" name="txtAnio">
+                <label>Año: </label>
+                <input type="number" name="txtAnio">
 
-        <button type="submit">Guardar Album</button>
+                <button type="submit">Guardar Album</button>
+            </form>
+        </div><!--cierra la columna md-5-->
 
-    </form>
+        <div class="col-md-7">
+        <!--aqui va la tabla-->
+            <table>
+                <thead>
+                    <!--preparar los contenidos del ecabezado-->
+                    <tr>
+                        <td>ID:</td>
+                        <td>Album:</td>
+                        <td>Artista:</td>
+                        <td>Año:</td>
+                        <td>Operaciones:</td>
+                    </tr>        
+                </thead>
+                <!--procesar los elementos de latabla-->
+                <tbody>
+                    {%for album in albums%}
+                    <tr>
+                        <!--Escrbimos los td que se necesitan y declara con una impresion-->
+                        <td>{{album.0}}</td>
+                        <td>{{album.1}}</td>
+                        <td>{{album.2}}</td>
+                        <td>{{album.3}}</td>
+                        <!--Agregar la parte de eliminar y agregar-->
+                        <td><a href="/editar/{{album.0}}">Editar</a></td>
+                        <td>
+                        <td><a href="/EliminarAlbum" onclick="confirmarEliminacion(event, '{{ album.0 }}')">Borrar</a></td>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div><!--cierra el col-7-->
+    </div><!--cierra la row-->
 
-    <br>
-    <br>
-    <br>
-
-    <table>
-        <thead>
-            <!--preparar los contenidos del ecabezado-->
-            <tr>
-                <td>ID:</td>
-                <td>Album:</td>
-                <td>Artista:</td>
-                <td>Año:</td>
-                <td>Operaciones:</td>
-
-            </tr>        
-        </thead>
-        <!--procesar los elementos de latabla-->
-        <tbody>
-            {%for album in albums%}
-            <tr>
-                <!--Escrbimos los td que se necesitan y declara con una impresion-->
-                <td>{{album.0}}</td>
-                <td>{{album.1}}</td>
-                <td>{{album.2}}</td>
-                <td>{{album.3}}</td>
-                <!--Agregar la parte de eliminar y agregar-->
-                <td><a href="/editar/{{album.0}}">Editar</a></td>
-                <td>
-                <td><a href="/EliminarAlbum" onclick="confirmarEliminacion(event, '{{ album.0 }}')">Borrar</a></td>
-                </td>
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-</body>
-</html>
+  
+  
+    
+    {%endblock%}
